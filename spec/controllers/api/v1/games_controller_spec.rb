@@ -10,7 +10,7 @@ RSpec.describe Api::V1::GamesController, type: :controller do
 
   context 'POST #create' do
     let(:user) { create(:user) }
-    let(:session) { create(:session, user: user) }
+    let(:session) { user.session }
     let(:game_attrs) { attributes_for(:game) }
     # let(:valid_game_json) do
     #   return {
@@ -123,7 +123,7 @@ RSpec.describe Api::V1::GamesController, type: :controller do
 
   context 'GET #index' do
     let(:user) { create(:user) }
-    let(:session) { create(:session, user: user) }
+    let(:session) { user.session }
 
     context 'with valid token' do
       before(:each) do

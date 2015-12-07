@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 
   before_save { email.downcase! }
 
+  after_create :create_session
+
   has_one :session, dependent: :destroy
 
   has_many :players
@@ -21,4 +23,10 @@ class User < ActiveRecord::Base
     format: { with: VALID_EMAIL_REGEX, message: "format not recognized" },
     uniqueness: { case_sensitive: false }
   }
+
+  private
+
+    def create_session
+      Session.create(user: self)
+    end
 end

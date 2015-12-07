@@ -28,7 +28,7 @@ RSpec.describe User, :type => :model do
     context 'when destroyed' do
       it 'should destroy its session' do
         @user = create(:user)
-        @session = create(:session, user: @user)
+        @session = @user.session
 
         @user.destroy
         expect { Session.find(@session.id) }.to raise_error(ActiveRecord::RecordNotFound)

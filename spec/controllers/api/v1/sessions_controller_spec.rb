@@ -10,7 +10,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
   context 'POST #create' do
     let(:user) { create(:user) }
-    let(:session) { create(:session, user: user) }
+    let!(:session) { user.session }
     let(:credentials) { { email: user.email, password: "factory_foo!"} }
 
     context 'with valid credentials' do
@@ -151,7 +151,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
   context 'DELETE #destroy' do
     let(:user) { create(:user) }
-    let!(:session) { create(:session, user: user) }
+    let!(:session) { user.session }
 
     context 'with invalid token' do
       context 'because it was sent via json' do
@@ -205,7 +205,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
       context 'and invalid id' do
         context 'because it belongs to another user' do
           before(:each) do
-            @session2 = create(:session)
+            @session2 = create(:user).session
             @initial_session_count = Session.all.count
             delete :destroy, id: @session2.id
           end
@@ -233,7 +233,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
   context 'GET #show' do
     let(:user) { create(:user) }
-    let!(:session) { create(:session, user: user) }
+    let!(:session) { user.session }
 
     context 'with invalid token' do
       context 'because it does not exist' do
@@ -285,7 +285,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
       context 'and invalid id' do
         context 'because it belongs to another user' do
           before(:each) do
-            @session2 = create(:session)
+            @session2 = create(:user).session
             @initial_session_count = Session.all.count
             get :show, id: @session2.id
           end

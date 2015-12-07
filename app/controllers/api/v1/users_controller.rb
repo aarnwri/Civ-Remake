@@ -10,8 +10,9 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     else
       @user = User.new(email: new_user_params[:email], password: new_user_params[:password])
       if @user.save
-        @session = Session.create(user: @user)
-        @session.create_token
+        # @session = Session.create(user: @user)
+        # @session.create_token
+        @session = @user.session
 
         # included data
         @sessions = [@session]

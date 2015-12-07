@@ -9,7 +9,9 @@ RSpec.describe Game, type: :model do
   context 'relationships' do
     it { should belong_to(:creator).class_name('User') }
     it { should have_many(:players) }
-    it { should have_many(:users).through(:players) }
+    it { should have_many(:playing_users).through(:players).class_name('User') }
+    it { should have_many(:invites) }
+    it { should have_many(:invited_users).through(:invites).class_name('User') }
   end
 
   context 'validations' do

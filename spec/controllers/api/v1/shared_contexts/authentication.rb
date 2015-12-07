@@ -2,7 +2,7 @@ require 'spec_helpers/headers'
 
 RSpec.shared_context 'token_authenticated_user' do
   let(:user) { create(:user) }
-  let(:session) { create(:session, user: user) }
+  let(:session) { user.session }
 
   before(:each) { set_headers({ token: session.token }) }
 end

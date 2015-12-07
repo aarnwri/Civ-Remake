@@ -1,6 +1,8 @@
 class Session < ActiveRecord::Base
   include Tokenable
 
+  after_create :create_token
+
   belongs_to :user
 
   validates :user_id, {
